@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .strength {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .weak { color: red; }
+        .medium { color: orange; }
+        .strong { color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Password Strength Checker</h2>
+        <input type="password" id="password" placeholder="Enter password">
+        <input type="checkbox" id="togglePassword"> Show Password
+        <div id="strength" class="strength"></div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const strengthDisplay = document.getElementById('strength');
+        const togglePassword = document.getElementById('togglePassword');
+
+        passwordInput.addEventListener('input', function () {
+            const password = passwordInput.value;
+            let strength = '';
+
+            if (password.length < 6) {
+                strength = '<span class="weak">Weak</span>';
+            } else if (password.match(/[a-z]/) && password.match(/[0-9]/) && password.length >= 6) {
+                strength = '<span class="medium">Medium</span>';
+            } else if (password.match(/[a-z]/) && password.match(/[0-9]/) && password.match(/[A-Z]/) && password.match(/[^a-zA-Z0-9]/) && password.length >= 8) {
+                strength = '<span class="strong">Strong</span>';
+            }
+
+            strengthDisplay.innerHTML = strength;
+        });
+
+        togglePassword.addEventListener('change', function () {
+            passwordInput.type = this.checked ? 'text' : 'password';
+        });
+    </script>
+</body>
+</html>
